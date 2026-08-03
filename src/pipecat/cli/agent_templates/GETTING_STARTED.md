@@ -4,25 +4,25 @@
 files here (`AGENTS.md`, `CLAUDE.md`) are the agent's guide, instructing
 it how to write, run, and test Pipecat code.
 
-## First: set up the Pipecat Context Hub
+## First: build the Context Hub index
 
 Your agent needs a live source of Pipecat truth — its #1 failure mode is
-confidently writing outdated APIs from memory. Set up the **Pipecat Context
-Hub**, a local index of Pipecat source, examples, and docs:
+confidently writing outdated APIs from memory. The **Pipecat Context Hub** is a
+local index of Pipecat source, examples, and docs that it queries instead.
+
+`pipecat init` already registered the hub's MCP server with the coding agents it
+found. What it can't do for you is build the index, which takes a few minutes and
+about 900 MB of disk space. If you skipped that when it asked, run:
 
 ```bash
-# Co-install the hub with the CLI, then let it do the setup
-uv tool install "pipecat-ai[cli]" --with pipecat-ai-context-hub
-pipecat context-hub install
+pipecat context-hub refresh
 ```
 
-`install` registers the MCP server with each coding agent it finds and builds the
-index, which takes a few minutes the first time since it downloads local models.
+Do it before opening your coding session, and not only because of the wait: the
+MCP server won't start against an empty index, so your agent would begin with no
+Pipecat tools at all.
 
-MCP servers load at session start, so do this *before* opening the coding
-session.
-
-Re-run `pipecat context-hub refresh` to index newer content — after bumping your Pipecat
+Re-run the same command to pick up newer content — after bumping your Pipecat
 version, or periodically, since Pipecat moves fast. The CLI reminds you when the
 index is stale or was built for a different Pipecat version.
 

@@ -154,6 +154,10 @@ cli = [
     "jinja2>=3.1.0,<4",
     "questionary>=2.0.0,<3",
     "ruff>=0.12.1,<1",
+    # Mounts as `pipecat context-hub`, the live Pipecat context the guides written
+    # by `pipecat init` tell coding agents to query. The 0.5.0 floor is load-bearing:
+    # earlier releases declare `requires-python <3.15`, which would be viral here.
+    "pipecat-ai-context-hub>=0.5.0,<1",
 ]
 
 [dependency-groups]
